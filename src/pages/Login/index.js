@@ -39,7 +39,7 @@ export default function ({ navigation }) {
             setLoading(false);
             if (res.data.status == 404) {
 
-              Alert.alert('siDani', res.data.message);
+              Alert.alert('MazidaTex', res.data.message);
 
             } else {
               storeData('user', res.data);

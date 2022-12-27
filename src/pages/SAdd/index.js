@@ -38,7 +38,7 @@ export default function SAdd({ navigation, route }) {
 
         getData('paired').then(res => {
             if (!res) {
-                Alert.alert('MadizaTex', 'Harap hubungkan printer kamu !')
+                Alert.alert('MazidaTex', 'Harap hubungkan printer kamu !')
             } else {
                 console.log(res);
                 setPaired(res);
@@ -259,7 +259,7 @@ export default function SAdd({ navigation, route }) {
                                     fontFamily: fonts.secondary[600]
                                 }}>{i.qty}</Text>
                                 <TouchableOpacity onPress={() => {
-                                    Alert.alert('MadizaTex', 'kamu yakin akan hapus ini ?', [
+                                    Alert.alert('MazidaTex', 'kamu yakin akan hapus ini ?', [
                                         {
                                             text: 'BATAL',
                                         },

@@ -61,7 +61,7 @@ export default function PrinterBluetooth() {
     const __renderItem = ({ item }) => {
         return (
             <TouchableOpacity onPress={() => {
-                Alert.alert('MadizaTex', 'Pilih perangkat ' + item.device_name + ' jadi yang utama ?', [
+                Alert.alert('MazidaTex', 'Pilih perangkat ' + item.device_name + ' jadi yang utama ?', [
                     {
                         text: 'TIdak',
                     },
@@ -112,7 +112,7 @@ export default function PrinterBluetooth() {
                             await BluetoothEscposPrinter.printColumn(
                                 [37],
                                 [BluetoothEscposPrinter.ALIGN.LEFT],
-                                ['MadizaTex BY Zavalabs'],
+                                ['MazidaTex BY Zavalabs'],
                                 {
                                     encoding: 'GBK',
                                     codepage: 0,

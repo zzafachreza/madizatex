@@ -194,7 +194,7 @@ export default function SCek({ navigation, route }) {
                                     fontFamily: fonts.secondary[400],
                                     fontSize: windowWidth / 30,
                                     color: colors.black,
-                                }}>{i.ekspedisi}</Text>
+                                }}>{i.kurir}</Text>
                             </View>
 
                             <View style={{

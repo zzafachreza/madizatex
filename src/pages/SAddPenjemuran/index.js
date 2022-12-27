@@ -27,7 +27,7 @@ export default function SAddPenjemuran({ navigation, route }) {
 
         getData('paired').then(res => {
             if (!res) {
-                Alert.alert('MadizaTex', 'Harap hubungkan printer kamu !')
+                Alert.alert('MazidaTex', 'Harap hubungkan printer kamu !')
             } else {
                 console.log(res);
                 setPaired(res);

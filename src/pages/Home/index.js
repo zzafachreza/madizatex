@@ -77,7 +77,7 @@ export default function Home({ navigation }) {
               fontFamily: fonts.secondary[600],
               fontSize: windowWidth / 15,
               color: colors.white
-            }}>MadizaTex</Text>
+            }}>MazidaTex</Text>
           </View>
 
           <View style={{
