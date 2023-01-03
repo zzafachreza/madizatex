@@ -23,7 +23,7 @@ export default function SAdd({ navigation, route }) {
 
     const [data, setData] = useState([]);
 
-
+    const NOW = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + "-" + ("0" + (new Date().getDate())).slice(-2);
 
 
     const [kirim, setKirim] = useState({
@@ -33,9 +33,25 @@ export default function SAdd({ navigation, route }) {
         jenis: '',
         kuantitas: 0,
     });
+
+    const [jenis, setJenis] = useState([]);
+
+    const getJenis = () => {
+        axios.post(webUrl + 'v1/jenis').then(res => {
+            console.log(res.data);
+            setJenis(res.data);
+            setKirim({
+                ...kirim,
+                jenis: res.data[0].value
+            })
+            // setData(res.data.data);
+
+        })
+    }
+
     const [paired, setPaired] = useState({});
     useEffect(() => {
-
+        getJenis();
         getData('paired').then(res => {
             if (!res) {
                 Alert.alert('MazidaTex', 'Harap hubungkan printer kamu !')
@@ -83,7 +99,7 @@ export default function SAdd({ navigation, route }) {
                         BluetoothManager.connect(paired.inner_mac_address)
                             .then(async (s) => {
                                 console.log(s);
-                                let columnWidths = [8, 20, 20];
+                                let columnWidths = [14, 2, 16];
                                 try {
 
 
@@ -93,7 +109,7 @@ export default function SAdd({ navigation, route }) {
                                     // await BluetoothEscposPrinter.printPic(logoCetak, { width: 250, left: 150 });
                                     await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
                                         [`Status`, ':', `PEREBUSAN`],
                                         {},
@@ -101,25 +117,25 @@ export default function SAdd({ navigation, route }) {
                                     await BluetoothEscposPrinter.printText("--------------------------------\n\r", {});
 
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
-                                        [`Kode`, ':', `${res.data}`],
+                                        [`Kode Produksi`, ':', `${res.data}`],
                                         {},
                                     );
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
-                                        [`Tanggal`, ':', `${new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()}`],
+                                        [`Tanggal`, ':', `${NOW}`],
                                         {},
                                     );
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
                                         [`Jenis`, ':', `${kirim.jenis}`],
                                         {},
                                     );
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
                                         [`Ket`, ':', `${kirim.keterangan}`],
                                         {},
@@ -189,11 +205,7 @@ export default function SAdd({ navigation, route }) {
                     onDateChange={(date) => setKirim({ ...kirim, tanggal: date })}
                 />
 
-                <MyGap jarak={10} />
-                <MyInput label="Jenis" iconname="grid-outline" onChangeText={x => setKirim({
-                    ...kirim,
-                    jenis: x
-                })} placeholder="Masukan Jenis" />
+
                 <MyGap jarak={20} />
                 <TouchableOpacity onPress={() => navigation.navigate('SAddSupplier', {
                     fid_user: route.params.id
@@ -305,6 +317,11 @@ export default function SAdd({ navigation, route }) {
                         </View>
                     </View>
                 </View>
+                <MyGap jarak={10} />
+                <MyPicker value={kirim.jenis} label="Jenis" data={jenis} iconname="list-outline" onValueChange={x => setKirim({
+                    ...kirim,
+                    jenis: x
+                })} />
                 <MyGap jarak={10} />
                 <MyInput label="Keterangan" onChangeText={x => setKirim({
                     ...kirim,

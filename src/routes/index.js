@@ -64,7 +64,7 @@ export default function Router() {
         component={SAdd}
         options={{
           headerShown: true,
-          headerTitle: 'Perebusan',
+          headerTitle: 'Bleaching',
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -76,7 +76,7 @@ export default function Router() {
         component={SAddSupplier}
         options={{
           headerShown: true,
-          headerTitle: 'Perebusan - Supplier',
+          headerTitle: 'Bleaching - Supplier',
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -89,7 +89,7 @@ export default function Router() {
         component={SAddPenjemuran}
         options={{
           headerShown: true,
-          headerTitle: 'Penjemuran',
+          headerTitle: 'Drying',
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -103,7 +103,7 @@ export default function Router() {
         component={SAddPencacahan}
         options={{
           headerShown: true,
-          headerTitle: 'Pencacahan',
+          headerTitle: 'Packing',
           headerStyle: {
             backgroundColor: colors.primary,
           },
@@ -116,7 +116,7 @@ export default function Router() {
         component={SAddDistribusi}
         options={{
           headerShown: true,
-          headerTitle: 'Pencacahan',
+          headerTitle: 'Distribusi',
           headerStyle: {
             backgroundColor: colors.primary,
           },

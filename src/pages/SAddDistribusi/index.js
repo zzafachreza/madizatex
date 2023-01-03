@@ -23,6 +23,7 @@ export default function SAddDistribusi({ navigation, route }) {
     const [distributor, setDistributor] = useState([]);
 
     const [data, setData] = useState([]);
+    const [jenis, setJenis] = useState([]);
 
     const [kirim, setKirim] = useState(route.params);
     const [paired, setPaired] = useState({});
@@ -44,7 +45,8 @@ export default function SAddDistribusi({ navigation, route }) {
             getSupplier();
             getMacam();
             getKurir();
-            getDistributor()
+            getDistributor();
+            getJenis();
         }
 
     }, [isFocus])
@@ -106,7 +108,15 @@ export default function SAddDistribusi({ navigation, route }) {
         })
     }
 
+    const getJenis = () => {
+        axios.post(webUrl + 'v1/jenis').then(res => {
+            console.log(res.data);
+            setJenis(res.data);
 
+            // setData(res.data.data);
+
+        })
+    }
 
     const sendServer = () => {
         console.log(kirim);
@@ -122,7 +132,7 @@ export default function SAddDistribusi({ navigation, route }) {
                         BluetoothManager.connect(paired.inner_mac_address)
                             .then(async (s) => {
                                 console.log(s);
-                                let columnWidths = [8, 20, 20];
+                                let columnWidths = [14, 2, 16];
                                 try {
 
 
@@ -132,7 +142,7 @@ export default function SAddDistribusi({ navigation, route }) {
                                     // await BluetoothEscposPrinter.printPic(logoCetak, { width: 250, left: 150 });
                                     await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
                                         [`Status`, ':', `DISTRIBUSI`],
                                         {},
@@ -140,34 +150,36 @@ export default function SAddDistribusi({ navigation, route }) {
                                     await BluetoothEscposPrinter.printText("--------------------------------\n\r", {});
 
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
-                                        [`Kode`, ':', `${res.data}`],
+                                        [`Kode Produksi`, ':', `${res.data}`],
                                         {},
                                     );
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
-                                        [`Tanggal`, ':', `${new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()}`],
+                                        [`Tanggal`, ':', `${new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + "-" + ("0" + (new Date().getDate())).slice(-2)}`],
                                         {},
                                     );
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
-                                        [`Jenis`, ':', `${kirim.jenis}`],
+                                        [`Jenis`, ':', `${kirim.jenis} `],
                                         {},
                                     );
                                     await BluetoothEscposPrinter.printColumn(
-                                        [10, 2, 20],
+                                        columnWidths,
                                         [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
-                                        [`Ket`, ':', `${kirim.keterangan}`],
+                                        [`Ket`, ':', `${kirim.keterangan} `],
                                         {},
                                     );
-                                    await BluetoothEscposPrinter.printQRCode(
-                                        `${res.data}`,
-                                        280,
-                                        BluetoothEscposPrinter.ERROR_CORRECTION.L,
+                                    await BluetoothEscposPrinter.printColumn(
+                                        columnWidths,
+                                        [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
+                                        [`Ekspedisi`, ':', `${kirim.kurir} `],
+                                        {},
                                     );
+
                                     await BluetoothEscposPrinter.printText('\r\n\r\n', {});
                                 } catch (e) {
                                     alert(e.message || 'ERROR');
@@ -229,10 +241,10 @@ export default function SAddDistribusi({ navigation, route }) {
 
 
                 <MyGap jarak={10} />
-                <MyInput value={kirim.jenis} label="Jenis" iconname="grid-outline" onChangeText={x => setKirim({
+                <MyPicker value={kirim.jenis} label="Jenis" data={jenis} iconname="list-outline" onValueChange={x => setKirim({
                     ...kirim,
                     jenis: x
-                })} placeholder="Masukan Jenis" />
+                })} />
                 <MyGap jarak={10} />
                 <MyPicker data={macam} value={kirim.macam} label="Macam" iconname="list-outline" onValueChange={x => setKirim({
                     ...kirim,

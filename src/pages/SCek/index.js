@@ -13,16 +13,108 @@ import axios from 'axios';
 import { FloatingAction } from "react-native-floating-action";
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import ViewShot from "react-native-view-shot";
-import Share from 'react-native-share';
+import { BluetoothEscposPrinter, BluetoothManager } from 'react-native-bluetooth-escpos-printer';
+
 export default function SCek({ navigation, route }) {
+
+    const [paired, setPaired] = useState({});
+
     const item = route.params;
     const [data, setData] = useState([]);
 
     const ref = useRef();
 
     const isFocused = useIsFocused();
+
+    const printData = async (kirim) => {
+
+        console.log(kirim);
+
+
+        BluetoothManager.connect(paired.inner_mac_address)
+            .then(async (s) => {
+                console.log(s);
+                let columnWidths = [14, 2, 16];
+                try {
+
+
+                    // await BluetoothEscposPrinter.printPic(logoCetak, { width: 250, left: 150 });
+                    await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
+                    await BluetoothEscposPrinter.printColumn(
+                        columnWidths,
+                        [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
+                        [`Status`, ':', `${kirim.status}`],
+                        {},
+                    );
+                    await BluetoothEscposPrinter.printText("--------------------------------\n\r", {});
+
+                    await BluetoothEscposPrinter.printColumn(
+                        columnWidths,
+                        [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
+                        [`Kode Produksi`, ':', `${kirim.kode}`],
+                        {},
+                    );
+                    await BluetoothEscposPrinter.printColumn(
+                        columnWidths,
+                        [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
+                        [`Tanggal`, ':', `${kirim.tanggal}`],
+                        {},
+                    );
+                    await BluetoothEscposPrinter.printColumn(
+                        columnWidths,
+                        [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
+                        [`Jenis`, ':', `${kirim.jenis}`],
+                        {},
+                    );
+                    await BluetoothEscposPrinter.printColumn(
+                        columnWidths,
+                        [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
+                        [`Ket`, ':', `${kirim.keterangan}`],
+                        {},
+                    );
+                    if (kirim.status == "DISTRIBUSI") {
+                        await BluetoothEscposPrinter.printColumn(
+                            columnWidths,
+                            [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.LEFT],
+                            [`Ekspedisi`, ':', `${kirim.kurir}`],
+                            {},
+                        );
+                    } else {
+                        await BluetoothEscposPrinter.printQRCode(
+                            `${kirim.kode}`,
+                            280,
+                            BluetoothEscposPrinter.ERROR_CORRECTION.L,
+                        );
+                    }
+                    await BluetoothEscposPrinter.printText('\r\n\r\n', {});
+                } catch (e) {
+                    alert(e.message || 'ERROR');
+                }
+
+
+
+            }, (e) => {
+
+                alert(e);
+            })
+
+
+
+    }
+
     useEffect(() => {
+
+        getData('paired').then(res => {
+            if (!res) {
+                Alert.alert('MazidaTex', 'Harap hubungkan printer kamu !')
+            } else {
+                console.log(res);
+                setPaired(res);
+            }
+        })
+
+
+
         if (isFocused) {
             getDataTransaction();
         }
@@ -33,7 +125,9 @@ export default function SCek({ navigation, route }) {
 
     const getDataTransaction = () => {
         getData('user').then(u => {
-            axios.post(webUrl + 'v1/get_riwayat').then(res => {
+            axios.post(webUrl + 'v1/get_riwayat', {
+                fid_user: u.id
+            }).then(res => {
                 console.log(res.data);
                 setData(res.data);
             })
@@ -220,13 +314,42 @@ export default function SCek({ navigation, route }) {
                                 }}>{i.distributor}</Text>
                             </View>
 
+                            <View style={{
+                                flexDirection: 'row'
+                            }}>
+                                <Text style={{
+                                    flex: 1,
+                                    fontFamily: fonts.secondary[600],
+                                    fontSize: windowWidth / 30,
+                                    color: colors.black,
+                                }}>Distributor</Text>
+
+                                <TouchableOpacity onPress={() => printData(i)} style={{
+                                    backgroundColor: colors.danger,
+                                    width: 100,
+                                    paddingVertical: 2,
+                                    borderRadius: 10,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Icon type='ionicon' name='print' color={colors.white} />
+                                    <Text style={{
+                                        left: 5,
+                                        fontFamily: fonts.secondary[600],
+                                        fontSize: windowWidth / 30,
+                                        color: colors.white,
+                                    }}>Print</Text>
+                                </TouchableOpacity>
+                            </View>
+
                         </View>
                     )
                 })}
             </ScrollView>
 
 
-        </SafeAreaView>
+        </SafeAreaView >
 
     )
 }
