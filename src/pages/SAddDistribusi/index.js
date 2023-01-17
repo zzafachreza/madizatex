@@ -206,7 +206,17 @@ export default function SAddDistribusi({ navigation, route }) {
             padding: 10,
         }}>
 
-
+            <Text style={{
+                color: colors.white,
+                paddingVertical: 10,
+                backgroundColor: colors.black,
+                textAlign: 'center',
+                fontSize: windowWidth / 20,
+                marginVertical: 5,
+                fontFamily: fonts.secondary[600]
+            }}><Text style={{
+                fontFamily: fonts.secondary[400],
+            }}>Kode Produksi : </Text>{route.params.kode}</Text>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <DatePicker
                     style={{ width: '100%' }}
@@ -239,12 +249,12 @@ export default function SAddDistribusi({ navigation, route }) {
                     onDateChange={(date) => setKirim({ ...kirim, tanggal: date })}
                 />
 
-
+                {/* 
                 <MyGap jarak={10} />
                 <MyPicker value={kirim.jenis} label="Jenis" data={jenis} iconname="list-outline" onValueChange={x => setKirim({
                     ...kirim,
                     jenis: x
-                })} />
+                })} /> */}
                 <MyGap jarak={10} />
                 <MyPicker data={macam} value={kirim.macam} label="Macam" iconname="list-outline" onValueChange={x => setKirim({
                     ...kirim,

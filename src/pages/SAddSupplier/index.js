@@ -20,6 +20,7 @@ export default function SAddSupplier({ navigation, route }) {
     const [supp, setSupp] = useState([]);
     const [kirim, setKirim] = useState({
         fid_user: route.params.fid_user,
+        keterangan_supplier: '',
         qty: 0,
     })
 
@@ -74,6 +75,11 @@ export default function SAddSupplier({ navigation, route }) {
                     ...kirim,
                     qty: x
                 })} iconname="cube-outline" keyboardType="number-pad" />
+                <MyGap jarak={10} />
+                <MyInput value={kirim.keterangan_supplier} label="Keterangan Supplier" onChangeText={x => setKirim({
+                    ...kirim,
+                    keterangan_supplier: x
+                })} iconname="create-outline" />
                 <MyGap jarak={10} />
                 <MyButton title="Simpan Data" onPress={sendServer} />
             </ScrollView>

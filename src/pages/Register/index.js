@@ -48,7 +48,8 @@ export default function Register({ navigation }) {
         email: '',
         nama_lengkap: '',
         alamat: '',
-        telepon: ''
+        telepon: '',
+        level: 'admin'
     });
 
     const simpan = () => {
@@ -123,7 +124,16 @@ export default function Register({ navigation }) {
 
 
 
-
+                <MyGap jarak={10} />
+                <MyPicker label="Level" iconname="list" onValueChange={value =>
+                    setData({
+                        ...data,
+                        level: value,
+                    })
+                } data={[
+                    { label: 'admin', value: 'admin' },
+                    { label: 'user', value: 'user' },
+                ]} />
 
                 <MyGap jarak={10} />
                 <MyInput

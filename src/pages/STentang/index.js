@@ -90,7 +90,8 @@ export default function STentang({ navigation, route }) {
     return (
         <SafeAreaView style={{
             flex: 1,
-            padding: 10
+            padding: 10,
+            backgroundColor: colors.white
         }}>
 
             {!open && <View style={{
@@ -110,6 +111,7 @@ export default function STentang({ navigation, route }) {
                     <MyList label="Email" value={user.email} />
                     <MyList label="Telepon / Whatsapp" value={user.telepon} />
                     <MyList label="Alamat" value={user.alamat} />
+                    <MyList label="Level" value={user.level} />
                 </View>
 
             </>}

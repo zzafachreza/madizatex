@@ -122,9 +122,11 @@ export default function SCek({ navigation, route }) {
     }, [isFocused]);
 
 
+    const [user, setUser] = useState({});
 
     const getDataTransaction = () => {
         getData('user').then(u => {
+            setUser(u);
             axios.post(webUrl + 'v1/get_riwayat', {
                 fid_user: u.id
             }).then(res => {
@@ -209,6 +211,28 @@ export default function SCek({ navigation, route }) {
                                     fontFamily: fonts.secondary[600],
                                     fontSize: windowWidth / 30,
                                     color: colors.black,
+                                }}>Kode Produksi</Text>
+                                <Text style={{
+                                    flex: 0.2,
+                                    fontFamily: fonts.secondary[600],
+                                    fontSize: windowWidth / 30,
+                                    color: colors.black,
+                                }}>:</Text>
+                                <Text style={{
+                                    flex: 1,
+                                    fontFamily: fonts.secondary[600],
+                                    fontSize: windowWidth / 30,
+                                    color: colors.primary,
+                                }}>{i.kode}</Text>
+                            </View>
+                            <View style={{
+                                flexDirection: 'row'
+                            }}>
+                                <Text style={{
+                                    flex: 0.4,
+                                    fontFamily: fonts.secondary[600],
+                                    fontSize: windowWidth / 30,
+                                    color: colors.black,
                                 }}>Kuantitas</Text>
                                 <Text style={{
                                     flex: 0.2,
@@ -268,53 +292,57 @@ export default function SCek({ navigation, route }) {
                                     color: colors.black,
                                 }}>{i.macam}</Text>
                             </View>
-                            <View style={{
-                                flexDirection: 'row'
-                            }}>
-                                <Text style={{
-                                    flex: 0.4,
-                                    fontFamily: fonts.secondary[600],
-                                    fontSize: windowWidth / 30,
-                                    color: colors.black,
-                                }}>Ekspedisi</Text>
-                                <Text style={{
-                                    flex: 0.2,
-                                    fontFamily: fonts.secondary[600],
-                                    fontSize: windowWidth / 30,
-                                    color: colors.black,
-                                }}>:</Text>
-                                <Text style={{
-                                    flex: 1,
-                                    fontFamily: fonts.secondary[400],
-                                    fontSize: windowWidth / 30,
-                                    color: colors.black,
-                                }}>{i.kurir}</Text>
-                            </View>
 
-                            <View style={{
-                                flexDirection: 'row'
-                            }}>
-                                <Text style={{
-                                    flex: 0.4,
-                                    fontFamily: fonts.secondary[600],
-                                    fontSize: windowWidth / 30,
-                                    color: colors.black,
-                                }}>Distributor</Text>
-                                <Text style={{
-                                    flex: 0.2,
-                                    fontFamily: fonts.secondary[600],
-                                    fontSize: windowWidth / 30,
-                                    color: colors.black,
-                                }}>:</Text>
-                                <Text style={{
-                                    flex: 1,
-                                    fontFamily: fonts.secondary[400],
-                                    fontSize: windowWidth / 30,
-                                    color: colors.black,
-                                }}>{i.distributor}</Text>
-                            </View>
+                            {user.level == "admin" &&
+                                <View style={{
+                                    flexDirection: 'row'
+                                }}>
+                                    <Text style={{
+                                        flex: 0.4,
+                                        fontFamily: fonts.secondary[600],
+                                        fontSize: windowWidth / 30,
+                                        color: colors.black,
+                                    }}>Ekspedisi</Text>
+                                    <Text style={{
+                                        flex: 0.2,
+                                        fontFamily: fonts.secondary[600],
+                                        fontSize: windowWidth / 30,
+                                        color: colors.black,
+                                    }}>:</Text>
+                                    <Text style={{
+                                        flex: 1,
+                                        fontFamily: fonts.secondary[400],
+                                        fontSize: windowWidth / 30,
+                                        color: colors.black,
+                                    }}>{i.kurir}</Text>
+                                </View>
+                            }
 
-                            <View style={{
+                            {user.level == "admin" &&
+                                <View style={{
+                                    flexDirection: 'row'
+                                }}>
+                                    <Text style={{
+                                        flex: 0.4,
+                                        fontFamily: fonts.secondary[600],
+                                        fontSize: windowWidth / 30,
+                                        color: colors.black,
+                                    }}>Distributor</Text>
+                                    <Text style={{
+                                        flex: 0.2,
+                                        fontFamily: fonts.secondary[600],
+                                        fontSize: windowWidth / 30,
+                                        color: colors.black,
+                                    }}>:</Text>
+                                    <Text style={{
+                                        flex: 1,
+                                        fontFamily: fonts.secondary[400],
+                                        fontSize: windowWidth / 30,
+                                        color: colors.black,
+                                    }}>{i.distributor}</Text>
+                                </View>
+                            }
+                            {user.level == "admin" && <View style={{
                                 flexDirection: 'row'
                             }}>
                                 <Text style={{
@@ -322,7 +350,7 @@ export default function SCek({ navigation, route }) {
                                     fontFamily: fonts.secondary[600],
                                     fontSize: windowWidth / 30,
                                     color: colors.black,
-                                }}>Distributor</Text>
+                                }}></Text>
 
                                 <TouchableOpacity onPress={() => printData(i)} style={{
                                     backgroundColor: colors.danger,
@@ -342,7 +370,7 @@ export default function SCek({ navigation, route }) {
                                     }}>Print</Text>
                                 </TouchableOpacity>
                             </View>
-
+                            }
                         </View>
                     )
                 })}

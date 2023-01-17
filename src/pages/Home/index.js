@@ -18,7 +18,7 @@ import ZavalabsScanner from 'react-native-zavalabs-scanner'
 
 export default function Home({ navigation }) {
   const [open, setOPen] = useState({
-    modal: true,
+    modal: false,
     tujuan: '',
     judul: '',
     kode: '',
@@ -496,7 +496,12 @@ export default function Home({ navigation }) {
                       kode: '',
                     })
                     console.log(res.data);
-                    navigation.navigate(open.tujuan, res.data);
+                    if (res.data == null) {
+                      Alert.alert('MazidaTex', 'Kode Produksi Salah !')
+                    } else {
+                      navigation.navigate(open.tujuan, res.data);
+                    }
+
                   })
                 }} title="Submit" />
               </View>

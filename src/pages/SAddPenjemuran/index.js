@@ -57,7 +57,7 @@ export default function SAddPenjemuran({ navigation, route }) {
             fid_user: route.params.fid_user,
             kode: route.params.kode
         }).then(res => {
-            console.log(res.data.data);
+            console.log('suppleir', res.data.data);
             setKirim({
                 ...kirim,
                 kuantitas: res.data.kuantitas
@@ -154,9 +154,21 @@ export default function SAddPenjemuran({ navigation, route }) {
             backgroundColor: colors.white,
             padding: 10,
         }}>
-
+            <Text style={{
+                color: colors.white,
+                paddingVertical: 10,
+                backgroundColor: colors.black,
+                textAlign: 'center',
+                fontSize: windowWidth / 20,
+                marginVertical: 5,
+                fontFamily: fonts.secondary[600]
+            }}><Text style={{
+                fontFamily: fonts.secondary[400],
+            }}>Kode Produksi : </Text>{route.params.kode}</Text>
 
             <ScrollView showsVerticalScrollIndicator={false}>
+
+
                 <DatePicker
                     style={{ width: '100%' }}
                     date={kirim.tanggal}
