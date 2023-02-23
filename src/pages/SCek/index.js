@@ -127,8 +127,10 @@ export default function SCek({ navigation, route }) {
     const getDataTransaction = () => {
         getData('user').then(u => {
             setUser(u);
+            console.log(u)
             axios.post(webUrl + 'v1/get_riwayat', {
-                fid_user: u.id
+                fid_user: u.id,
+                level: u.level
             }).then(res => {
                 console.log(res.data);
                 setData(res.data);

@@ -50,10 +50,10 @@ export default function SAddPencacahan({ navigation, route }) {
             fid_user: route.params.fid_user,
             kode: route.params.kode
         }).then(res => {
-            setKirim({
-                ...kirim,
-                kuantitas: res.data.kuantitas
-            })
+            // setKirim({
+            //     ...kirim,
+            //     kuantitas: res.data.kuantitas
+            // })
             setData(res.data.data);
 
         })
@@ -155,6 +155,8 @@ export default function SAddPencacahan({ navigation, route }) {
 
                                 alert(e);
                             })
+
+                        navigation.goBack();
 
                     }
                 }

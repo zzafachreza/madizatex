@@ -20,7 +20,7 @@ export const getData = async key => {
 };
 
 
-export const apiURL = 'https://madizatex.zavalabs.com/api/';
+export const apiURL = 'https://mazidatex.zavalabs.com/api/';
 export const webUrl = apiURL.replace("api/", "");
 
 export const urlToken = '2e30645f2f7ff92fc9d72971147724e80a6b3ad0';

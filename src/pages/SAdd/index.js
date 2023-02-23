@@ -16,6 +16,7 @@ import { maskJs } from 'mask-js';
 import { BluetoothEscposPrinter, BluetoothManager } from 'react-native-bluetooth-escpos-printer';
 export default function SAdd({ navigation, route }) {
 
+
     const isFocus = useIsFocused();
 
     const [loading, setLoading] = useState(false);
@@ -28,6 +29,7 @@ export default function SAdd({ navigation, route }) {
 
     const [kirim, setKirim] = useState({
         fid_user: route.params.id,
+        input_riwayat: route.params.nama_lengkap,
         tanggal: new Date(),
         keterangan: '',
         jenis: '',
@@ -155,7 +157,11 @@ export default function SAdd({ navigation, route }) {
                             }, (e) => {
 
                                 alert(e);
-                            })
+                            });
+
+
+                        navigation.goBack()
+
 
                     }
                 }

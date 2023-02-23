@@ -181,7 +181,8 @@ export default function Home({ navigation }) {
 
                       if (result !== null) {
                         axios.post(webUrl + 'v1/get_penjemuran', {
-                          kode: result
+                          kode: result,
+                          fid_user: user.id
                         }).then(res => {
                           console.log(res.data);
                           navigation.navigate('SAddPenjemuran', res.data);
@@ -248,7 +249,8 @@ export default function Home({ navigation }) {
 
                       if (result !== null) {
                         axios.post(webUrl + 'v1/get_penjemuran', {
-                          kode: result
+                          kode: result,
+                          fid_user: user.id
                         }).then(res => {
                           console.log(res.data);
                           navigation.navigate('SAddPencacahan', res.data);
@@ -313,7 +315,8 @@ export default function Home({ navigation }) {
 
                       if (result !== null) {
                         axios.post(webUrl + 'v1/get_penjemuran', {
-                          kode: result
+                          kode: result,
+                          fid_user: user.id
                         }).then(res => {
                           console.log(res.data);
                           navigation.navigate('SAddDistribusi', res.data);
@@ -393,7 +396,7 @@ export default function Home({ navigation }) {
               color: colors.white,
             }}>Riwayat</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => Alert.alert('SiDani', 'Apakah kamu yakin akan keluar ?', [
+          <TouchableOpacity onPress={() => Alert.alert('Mazida Tex', 'Apakah kamu yakin akan keluar ?', [
             {
               text: 'Tidak',
               type: 'cancel'
@@ -485,17 +488,22 @@ export default function Home({ navigation }) {
                 flex: 1,
               }}>
                 <MyButton onPress={() => {
-                  console.log(open.kode);
+
+
                   axios.post(webUrl + 'v1/get_penjemuran', {
-                    kode: open.kode
+                    kode: open.kode,
+                    fid_user: user.id
                   }).then(res => {
+
+
+
                     setOPen({
                       modal: false,
                       judul: '',
                       tujuan: '',
                       kode: '',
                     })
-                    console.log(res.data);
+
                     if (res.data == null) {
                       Alert.alert('MazidaTex', 'Kode Produksi Salah !')
                     } else {

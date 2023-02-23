@@ -37,6 +37,7 @@ export default function SAddPenjemuran({ navigation, route }) {
 
 
         if (isFocus) {
+
             getSupplier();
         }
 
@@ -70,7 +71,7 @@ export default function SAddPenjemuran({ navigation, route }) {
 
 
     const sendServer = () => {
-        console.log(kirim);
+        // console.log(kirim);
         axios.post(webUrl + 'v1/update_penjuemuran', kirim).then(res => {
             console.log(res.data);
             Alert.alert('Berhasil', `${res.data}`, [
@@ -140,6 +141,9 @@ export default function SAddPenjemuran({ navigation, route }) {
 
                                 alert(e);
                             })
+
+
+                        navigation.goBack()
 
                     }
                 }

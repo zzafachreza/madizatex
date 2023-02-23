@@ -60,7 +60,7 @@ export default function SAddDistribusi({ navigation, route }) {
         }).then(res => {
             setKirim({
                 ...kirim,
-                kuantitas: res.data.kuantitas
+
             })
             setData(res.data.data);
 
@@ -191,7 +191,7 @@ export default function SAddDistribusi({ navigation, route }) {
 
                                 alert(e);
                             })
-
+                        navigation.goBack();
                     }
                 }
             ]);
