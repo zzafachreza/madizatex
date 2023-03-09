@@ -344,6 +344,36 @@ export default function SCek({ navigation, route }) {
                                     }}>{i.distributor}</Text>
                                 </View>
                             }
+                            {user.level == "user" && i.status !== 'DISTRIBUSI' && <View style={{
+                                flexDirection: 'row'
+                            }}>
+                                <Text style={{
+                                    flex: 1,
+                                    fontFamily: fonts.secondary[600],
+                                    fontSize: windowWidth / 30,
+                                    color: colors.black,
+                                }}></Text>
+
+                                <TouchableOpacity onPress={() => printData(i)} style={{
+                                    backgroundColor: colors.danger,
+                                    width: 100,
+                                    paddingVertical: 2,
+                                    borderRadius: 10,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Icon type='ionicon' name='print' color={colors.white} />
+                                    <Text style={{
+                                        left: 5,
+                                        fontFamily: fonts.secondary[600],
+                                        fontSize: windowWidth / 30,
+                                        color: colors.white,
+                                    }}>Print</Text>
+                                </TouchableOpacity>
+                            </View>
+                            }
+
                             {user.level == "admin" && <View style={{
                                 flexDirection: 'row'
                             }}>
